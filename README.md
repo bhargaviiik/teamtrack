@@ -9,11 +9,14 @@ collaboratively.
 - **Backend:** Node.js, Express, MongoDB, Mongoose
 - **Auth:** JWT, bcrypt
 
+
 ## Project Structure
 
+```
 teamtrack/
-├── backend/ # Express REST API, MongoDB models, auth
-└── frontend/ # React app (Vite)
+├── backend/    Express REST API, MongoDB models, auth
+└── frontend/   React app (Vite)
+```
 
 ## Getting Started
 
@@ -21,7 +24,7 @@ teamtrack/
 See [backend/README.md](./backend/README.md)
 
 ### Frontend
-see [frontend/README.md](./frontend/README.md)
+See [frontend/README.md](./frontend/README.md)
 
 ## Why This Project
 Built to solve a real gap in how college project teams track task ownership 
