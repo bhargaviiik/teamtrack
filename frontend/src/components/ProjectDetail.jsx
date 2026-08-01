@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import api from '../api';
 
 function ProjectDetail() {
   const { id } = useParams();
@@ -17,12 +18,12 @@ function ProjectDetail() {
 
   const fetchData = async () => {
     try {
-      const projectRes = await axios.get(`http://localhost:5000/api/projects/${id}`, {
+      const projectRes = await api.get(`/api/projects/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProject(projectRes.data);
 
-      const tasksRes = await axios.get(`http://localhost:5000/api/tasks/project/${id}`, {
+      const tasksRes = await api.get(`/api/tasks/project/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(tasksRes.data);
@@ -42,8 +43,8 @@ function ProjectDetail() {
   const handleCreateTask = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        'http://localhost:5000/api/tasks',
+      await api.post(
+        '/api/tasks',
         { ...newTask, project: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -58,8 +59,8 @@ function ProjectDetail() {
     e.preventDefault();
     setMemberError('');
     try {
-        await axios.post(
-        `http://localhost:5000/api/projects/${id}/members`,
+        await api.post(
+        `/api/projects/${id}/members`,
         { email: memberEmail },
         { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -74,8 +75,8 @@ function ProjectDetail() {
 
   const updateStatus = async (taskId, status) => {
     try {
-      await axios.put(
-        `http://localhost:5000/api/tasks/${taskId}`,
+      await api.put(
+        `/api/tasks/${taskId}`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -127,6 +128,7 @@ function ProjectDetail() {
             tasks.map((task) => (
             <div key={task._id} className="card">
                 <h4>{task.title}</h4>
+                <p>{task.description}</p>
                 <p>Status: {task.status}</p>
                 <select
                 value={task.status}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import api from '../api';
 
 function Dashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -12,7 +13,7 @@ function Dashboard() {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/projects', {
+      const res = await api.get('/api/projects', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProjects(res.data);
@@ -34,7 +35,7 @@ function Dashboard() {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/projects', newProject, {
+      await api.post('/api/projects', newProject, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNewProject({ title: '', description: '' });
