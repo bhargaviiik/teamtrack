@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -73,7 +74,11 @@ function Dashboard() {
       ) : (
         projects.map((project) => (
           <div key={project._id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '8px' }}>
-            <h4>{project.title}</h4>
+            
+            <Link to={`/projects/${project._id}`}>
+              <h4>{project.title}</h4>
+            </Link>
+
             <p>{project.description}</p>
           </div>
         ))
