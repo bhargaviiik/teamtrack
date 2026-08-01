@@ -3,6 +3,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import ProjectDetail from './components/ProjectDetail';
+import Home from './components/Home';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -16,6 +17,15 @@ function NavBar() {
 
   return (
     <nav>
+      <Link to="/" className="logo">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+        <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.5"/>
+        <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.5"/>
+        <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor"/>
+      </svg>
+      TeamTrack
+  </Link>
       {!token && <Link to="/signup">Sign Up</Link>}
       {!token && <Link to="/login">Login</Link>}
       {token && <Link to="/dashboard">Dashboard</Link>}
@@ -30,6 +40,7 @@ function App() {
       <NavBar />
       <div className="container">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
