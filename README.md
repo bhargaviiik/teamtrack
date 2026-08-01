@@ -1,5 +1,8 @@
 # TeamTrack
 
+🔗 **Live Demo:** [teamtrack-chi.vercel.app](https://teamtrack-chi.vercel.app/)
+> Note: hosted on a free tier — first load may take 30–60s if the server has been idle.
+
 A full-stack task management platform built for college project teams — 
 helps teams create shared workspaces, assign tasks, and track progress 
 collaboratively.
@@ -30,6 +33,3 @@ See [frontend/README.md](./frontend/README.md)
 Built to solve a real gap in how college project teams track task ownership 
 and deadlines — most groups end up losing track of who owes what before a 
 submission.
-
-## Status
-🚧 In active development
