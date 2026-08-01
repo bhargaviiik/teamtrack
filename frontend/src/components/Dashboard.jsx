@@ -49,22 +49,26 @@ function Dashboard() {
       <h2>Dashboard</h2>
       <p>Welcome, {user?.name}</p>
 
-      <h3>Create a Project</h3>
-      <form onSubmit={handleCreate}>
-        <input
-          name="title"
-          placeholder="Project title"
-          value={newProject.title}
-          onChange={handleChange}
-        />
-        <input
-          name="description"
-          placeholder="Description"
-          value={newProject.description}
-          onChange={handleChange}
-        />
-        <button type="submit">Create</button>
-      </form>
+      { user?.role === 'admin' && (
+        <div>
+          <h3>Create a Project</h3>
+          <form onSubmit={handleCreate}>
+          <input
+            name="title"
+            placeholder="Project title"
+            value={newProject.title}
+            onChange={handleChange}
+          />
+          <input
+            name="description"
+            placeholder="Description"
+            value={newProject.description}
+            onChange={handleChange}
+          />
+          <button type="submit">Create</button>
+          </form>
+      </div>
+      )}
 
       <h3>Your Projects</h3>
       {loading ? (
@@ -73,15 +77,13 @@ function Dashboard() {
         <p>No projects yet.</p>
       ) : (
         projects.map((project) => (
-          <div key={project._id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '8px' }}>
-            
-            <Link to={`/projects/${project._id}`}>
+          <Link key={project._id} to={`/projects/${project._id}`} className="card-link">
+            <div className="card">
               <h4>{project.title}</h4>
-            </Link>
-
-            <p>{project.description}</p>
-          </div>
-        ))
+              <p>{project.description}</p>
+            </div>
+          </Link>
+))
       )}
     </div>
   );

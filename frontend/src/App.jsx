@@ -1,23 +1,41 @@
-
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import ProjectDetail from './components/ProjectDetail';
 
+function NavBar() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
+
+  return (
+    <nav>
+      {!token && <Link to="/signup">Sign Up</Link>}
+      {!token && <Link to="/login">Login</Link>}
+      {token && <Link to="/dashboard">Dashboard</Link>}
+      {token && <button onClick={handleLogout}>Logout</button>}
+    </nav>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <nav>
-        <Link to="/signup">Sign Up</Link> | <Link to="/login">Login</Link>
-      </nav>
-
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/projects/:id" element={<ProjectDetail />} />
-      </Routes>
+      <NavBar />
+      <div className="container">
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

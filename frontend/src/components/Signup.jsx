@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,7 +24,7 @@ function Signup() {
       const res = await axios.post('http://localhost:5000/api/auth/signup', formData);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data));
-      alert('Signup successful!');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
     }

@@ -1,13 +1,18 @@
 const express = require('express');
 const Project = require('../models/Project');
+const User = require('../models/User');
 const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 // @route   POST /api/projects
-// @desc    Create a new project
+// @desc    Create a new project (admins only)
 router.post('/', protect, async (req, res) => {
   try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Only admins can create projects' });
+    }
+
     const { title, description } = req.body;
 
     const project = await Project.create({
@@ -56,20 +61,24 @@ router.get('/:id', protect, async (req, res) => {
 });
 
 // @route   POST /api/projects/:id/members
-// @desc    Add a member to a project by email
+// @desc    Add a member to a project by email (creator only)
 router.post('/:id/members', protect, async (req, res) => {
   try {
     const { email } = req.body;
-    const User = require('../models/User');
-
-    const userToAdd = await User.findOne({ email });
-    if (!userToAdd) {
-      return res.status(404).json({ message: 'User not found' });
-    }
 
     const project = await Project.findById(req.params.id);
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
+    }
+
+    // only the project creator can add members
+    if (project.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Only the project creator can add members' });
+    }
+
+    const userToAdd = await User.findOne({ email });
+    if (!userToAdd) {
+      return res.status(404).json({ message: 'User not found' });
     }
 
     // avoid adding the same member twice
